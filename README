@@ -1,1 +1,12 @@
 Simple address book web application
+
+A Web application made to learn more about programming, git and GitHub.
+
+Dependencies:
+- Python 2.7
+- Flask
+- Jquery
+- Bootstrap
+
+
+
