@@ -1,6 +1,8 @@
 
 from flask import Flask, render_template, request, session, redirect, url_for
 
+import urllib
+
 app = Flask(__name__) 
 
 
@@ -27,19 +29,27 @@ def ajax():
             return "no get value"
 
 
-@app.route('/newajax', methods=['POST'])
-def newajax():
-    if request.form.has_key('action'):
-        action = request.form['action']
-        y = request.form['newdata']
-        return "ok"
+@app.route('/NewPerson', methods=['POST'])
+def newperson():
+    if request.form.has_key('name'):
+        x = request.form['name']
+        return str(x)
     else:
-        return "bad"
+        return "Bad form" # we dont need to keep this (server will give bad request anyway)
+
+@app.route('/NewBusiness', methods=['POST'])
+def newbusiness():
+    if request.form.has_key('name'):
+        x = request.form['name']
+        return str(x)
+    else:
+        return "Bad form" # we dont need to keep this (server will give bad request anyway)
 
 
-        import urllib
-        url=urllib.unquote(y).decode('utf8')
-        return str(x)+" "+str(url)
+    
+    
+
+
 
 
 if __name__ == '__main__':
