@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Birdsong - Sending messages on the web</title>
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/style.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    .hideme {
+        display: none;
+    }
+    
+    .navbar {
+        margin-bottom: 0px;  border: 0px; text-color: red;
+    }
+    </style>
+  </head>
+  <body>
+
+<!-- ====================================================================== -->
+<!-- WEBSITE NAVIGATION -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header" >
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#" style='color: blue'>Sebastiaan Bakker</a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" >
+      <ul class="nav navbar-nav">
+        <li ><a href="#">Home</a></li>
+        <li ><a href="#">About</a></li>
+        <li ><a href="#">Blogging</a></li>
+      </ul>
+       <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="#" style='color: #660000'>Blackbook</a><span class="sr-only">(current)</span></li>
+        <li><a href="#" style='color: green'>Songbird</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<!-- ====================================================================== -->
+      
+<!-- ====================================================================== -->
+<!-- JUMBOTRON -->
+<div class="jumbotron" style='background: #FFD633; padding: 10px;'>
+  <div class="container">
+    <h1><span style='color: #660000'>Blackbook</span></h1>
+    <h2 style='margin-bottom: 20px;'>Address book for the web</h2>
+    <div class="dropdown">
+      <button class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Menu
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><a href="#" data-name='add'>Add...</a></li>
+        <li><a href="#" data-name='search'>Search</a></li>
+        <li><a href="#" data-name='new'>New...</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- ====================================================================== -->
+  
+
+<!-- The full page container -->
+<div class='container' id='full_page'>
+
+{% block content %} {% endblock %}
+
+
+
+</div> <!-- /.container - full page container -->
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/static/bootstrap/js/bootstrap.min.js"></script>
+          <script>
+      // A $( document ).ready() block.
+$( document ).ready(function() {
+
+// EXAMPLE CODE....NOT IN USE
+// Add a phone number input field
+var $counter = 0;
+$( "#add_phone" ).click(function( event ) {
+    event.preventDefault();
+    $counter = $counter +1;
+    console.log($counter)
+    if($counter < 4) {
+        var section = $("#phonetemplate").clone();
+        section.attr('id', 'phone' + $counter);
+        $( ".addstuff" ).append( $( section ) );
+        // still need to change params in the cloned input field
+    }
+    else {
+        $("#warning-field").html("You can only add 3 phone numbers here.");
+        }
+});
+// end of adding phone number
+
+
+
+
+
+// ajax
+function myajax($target) {
+// Using the core $.ajax() method
+$.ajax({
+    // The URL for the request
+    url: "/ajax",
+    // The data to send (will be converted to a query string)
+    data: {
+        name: $target
+    },
+
+    // Whether this is a POST or GET request
+    type: "GET",
+    // The type of data we expect back
+    dataType : "html",
+
+    // Code to run if the request succeeds;
+    // the response is passed to the function
+    success: function( json ) {
+        $("#full_page").html(json).slideDown();
+        //$( "<h1>" ).text( json.title ).appendTo( "body" );
+        //$( "<div class=\"content\">").html( json.html ).appendTo( "body" );
+    },
+
+    // Code to run if the request fails; the raw request and
+    // status codes are passed to the function
+    error: function( xhr, status, errorThrown ) {
+        alert( "Sorry, there was a problem!" );
+        console.log( "Error: " + errorThrown );
+        console.log( "Status: " + status );
+        console.dir( xhr );
+    },
+
+    // Code to run regardless of success or failure
+    complete: function( xhr, status ) {
+    //alert( "The request is complete!" );
+    }
+});
+
+}
+
+
+$("a").click(function(event) {
+    var $xxx = $( this ).data( "name" );
+    console.log($xxx);
+    if( $xxx == "search") {
+        console.log("we want search");
+            myajax($xxx);
+    }
+    else if($xxx == "add") {
+        console.log("we want add");
+            myajax($xxx);
+    }
+    else if($xxx == "new") {
+                    myajax($xxx);
+    }
+    else {
+        console.log("different link");
+    }
+
+});
+
+
+
+
+
+});
+
+
+$(document).on('click', ".section_button", function () {
+// Show a section of the page; show, hide, more
+//$(".section_button").click(function(event) {
+    var $xxx = $( this ).data( "name" );
+    console.log("clicked");
+    $(".hideme").hide("slow");
+    $(".list-group-item").removeClass("active");
+    $(".section").hide("slow"); 
+    $("#"+$xxx).show("slow");
+    $(".section_button").removeClass("active");
+    $(this).addClass("active");
+//});
+});
+
+$(document).on('click', ".list-group-item", function () {
+// Show panel for adding, removing and showing
+//$( ".list-group-item" ).click(function( event ) {
+    var $xxx = $( this ).data( "name" );
+    console.log("clicked");
+    $(".hideme").hide("slow");
+    $("#"+$xxx).show("slow");
+    $(".list-group-item").removeClass("active");
+    $(this).addClass("active");
+});
+
+// Buttons on the "New Page" to add a new person or a business.
+$(document).on('click', ".btn", function (event) {
+    event.preventDefault();
+    var $xxx = $( this ).data( "target" );
+    if( $xxx == "new_person") {
+        console.log("We want a new person");
+        var $newdata = $( "#new_person" ).serialize().replace(/\+/g,'%20');
+        new_ajax($xxx, $newdata);
+    }
+    else if($xxx == 'new_business') {
+        console.log("We want a new business");
+    }
+    else {
+        console.log("We want something else");
+    }
+    
+    
+});
+
+
+// ajax
+function new_ajax($target, $newdata) {
+// Using the core $.ajax() method
+$.ajax({
+    // The URL for the request
+    url: "/newajax",
+    // The data to send (will be converted to a query string)
+    data: {
+        action: $target,
+        newdata: $newdata
+    },
+
+    // Whether this is a POST or GET request
+    type: "POST",
+    // The type of data we expect back
+    dataType : "html",
+
+
+    // Code to run if the request succeeds;
+    // the response is passed to the function
+    success: function( json ) {
+        $("#full_page").html(json).slideDown();
+        //$( "<h1>" ).text( json.title ).appendTo( "body" );
+        //$( "<div class=\"content\">").html( json.html ).appendTo( "body" );
+    },
+
+    // Code to run if the request fails; the raw request and
+    // status codes are passed to the function
+    error: function( xhr, status, errorThrown ) {
+        alert( "Sorry, there was a problem!" );
+        console.log( "Error: " + errorThrown );
+        console.log( "Status: " + status );
+        console.dir( xhr );
+    },
+
+    // Code to run regardless of success or failure
+    complete: function( xhr, status ) {
+    //alert( "The request is complete!" );
+    }
+});
+}
+
+
+
+
+
+
+      </script>
+  </body>
+</html>

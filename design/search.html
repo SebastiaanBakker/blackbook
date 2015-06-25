@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Birdsong - Sending messages on the web</title>
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    .showhide {
+        display: none;
+    }
+    
+    </style>
+  </head>
+  <body>
+
+      
+	  <div class="jumbotron" style='background: #FFD633; padding: 10px;'>
+  <div class="container">
+      
+    <h1><span style='color: #660000'>Blackbook</span></h1>
+    <h2 style='margin-bottom: 20px;'>Address book for the web</h2>
+    
+      <div class="dropdown">
+  <button class="btn btn-success btn-lg dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Menu
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+    <li><a href="#">Add...</a></li>
+    <li><a href="#">Search</a></li>
+  </ul>
+</div>
+
+  
+    
+    
+  </div>
+  
+  
+
+  
+</div>
+
+
+
+
+<div class='container'>
+
+<div id='page_show' class='page'>
+  <div='row'>
+    <div class='col-sm-6'>
+
+<div class='well'>
+<h3 style='margin: 0px;'><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Persons</h3>
+</div>
+
+<div class="list-group">
+  <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+  <a href="#" class="list-group-item">Morbi leo risus</a>
+  <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+  <a href="#" class="list-group-item">Vestibulum at eros</a>
+</div>
+
+    </div> <!-- /.column -->
+
+    <div class='col-sm-6'>
+
+<div class='well'>
+<h3 style='margin: 0px;'><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> Businesses</h3>
+</div>
+
+<div class="list-group">
+  <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+  <a href="#" class="list-group-item">Morbi leo risus</a>
+  <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+  <a href="#" class="list-group-item">Vestibulum at eros</a>
+</div>
+
+    </div> <!-- /.column -->
+      </div> <!-- /.row -->
+
+
+
+</div> <!-- /.container -->
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+          <script>
+      // A $( document ).ready() block.
+$( document ).ready(function() {
+alert( "ready!" );
+
+
+// Add a phone number input field
+var $counter = 0;
+$( "#add_phone" ).click(function( event ) {
+    event.preventDefault();
+    $counter = $counter +1;
+    console.log($counter)
+    if($counter < 4) {
+        var section = $("#phonetemplate").clone();
+        section.attr('id', 'phone' + $counter);
+        $( ".addstuff" ).append( $( section ) );
+        // still need to change params in the cloned input field
+    }
+    else {
+        $("#warning-field").html("You can only add 3 phone numbers here.");
+        }
+});
+// end of adding phone number
+
+
+
+$( ".list-group-item" ).click(function( event ) {
+
+    console.log("clicked");
+        var $xxx = event.target.id;
+    event.preventDefault();
+    $(".showhide").hide();
+    console.log($xxx)
+    $xxx = "do_"+$xxx
+    $("#"+$xxx).show();
+
+    $(".list-group-item").removeClass("active");
+            $(this).addClass("active");
+});
+
+
+
+// Navigate to a certain page
+$(".page_button").click(function(event) {
+    var $xxx = $( this ).data( "name" );
+    var $iam = event.target.id;
+    $(".page").hide(); 
+    $("#"+$xxx).show();
+        $(".page_button").removeClass("active");
+                $(this).addClass("active");
+});
+
+
+$( ".list-group-item" ).click(function( event ) {
+    var $xxx = $( this ).data( "name" );
+    $(".showhide").hide();
+    $("#"+$xxx).show();
+});
+
+
+$('#myTabs a').click(function (e) {
+  e.preventDefault()
+  $(this).tab('show')
+})
+
+
+
+
+});
+      </script>
+  </body>
+</html>
